@@ -18,9 +18,17 @@ data = [line.strip().split() for line in data]
 # 将前7列时间数据转换到unix时间戳格式，精确到纳秒
 for i in range(len(data)):
     # 将前7列数据拼接成时间字符串
-    time_str = ' '.join(data[i][:7])
+    time_copy  = data[i][:7]
     # 将时间字符串转换为datetime对象
-    time_obj = datetime.strptime(time_str, '%Y %m %d %H %M %S %f')
+    year = int(time_copy[0])
+    month = int(time_copy[1])
+    day = int(time_copy[2])
+    hour = int(time_copy[3])
+    minute = int(time_copy[4])
+    second = int(time_copy[5])
+    microsecond = int(time_copy[6])*1000
+
+    time_obj = datetime(year, month, day, hour, minute, second, microsecond)
     # 将datetime对象转换为unix时间戳格式，精确到纳秒
     timestamp = int(time_obj.timestamp() * 1e9)
     # 将转换后的时间戳替换原来的时间数据
